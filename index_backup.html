@@ -260,6 +260,8 @@ nav ul li a:focus-visible { outline:2px solid var(--gold); outline-offset:-2px; 
   border:0.5px solid var(--gold); color:var(--gold);
   position:relative; overflow:hidden; transition:color 0.4s;
   display:inline-block;
+  cursor:pointer;
+  background:none;
 }
 .btn::before {
   content:''; position:absolute; inset:0; background:var(--gold);
@@ -543,7 +545,7 @@ footer {
 .skip-link:focus { top:10px; }
 
 @media(max-width:900px){
-  #home { padding:4rem 1.5rem 3rem; }
+  #home { padding:2rem 1.5rem 3rem; }
   .hero-hand { max-height:40vh; top:55%; }
   .hero-ankh { margin-top:2rem; font-size:72px; color:var(--gold); animation:none; opacity:1; }
   .hero-ankh::before { display:none; }
@@ -591,7 +593,7 @@ footer {
 <main id="main-content">
 
 <section id="home" aria-labelledby="hero-title">
-  <img src="hand.png" alt="" class="hero-hand" aria-hidden="true">
+  <img src="hand.webp" alt="" class="hero-hand" aria-hidden="true">
   <div class="hero-frame" aria-hidden="true">
     <div class="hero-inner">
       <h1 id="hero-title" class="hero-title">
@@ -603,8 +605,9 @@ footer {
         <div class="hero-title-line" style="width:52px;"></div>
       </div>
       <p class="hero-sub"><span class="hero-sub-line"></span><br><span class="gold-rule" style="width:50px;margin:0.8rem auto;"></span><br><span class="w">into</span> <span class="w">the</span> <span class="w">darkness</span> <span class="d">—</span> <span class="w">toward</span> <span class="w">each</span> <span class="w">other</span></p>
+      <audio id="hero-audio" src="romans.mp3"></audio>
       <div class="hero-cta">
-        <a href="#" class="btn"><span>Hear the Music</span></a>
+        <button class="btn" id="play-music"><span> Hear the Music</span></button>
         <a href="#about" class="btn ghost"><span>Enter</span></a>
       </div>
     </div>
@@ -620,7 +623,7 @@ footer {
       <span class="corner bl"></span>
       <span class="corner br"></span>
       <div class="artist-img">
-        <img src="artist.png" alt="RVRND Artist" style="width:100%;height:100%;object-fit:cover;">
+        <img src="artist.webp" alt="RVRND Artist" style="width:100%;height:100%;object-fit:cover;">
       </div>
     </div>
     <div class="about-text">
@@ -942,6 +945,20 @@ document.addEventListener('DOMContentLoaded', () => {
       navToggle.focus();
     }
   });
+
+  const playBtn = document.getElementById('play-music');
+  const heroAudio = document.getElementById('hero-audio');
+  if (playBtn && heroAudio) {
+    playBtn.addEventListener('click', () => {
+      if (heroAudio.paused) {
+        heroAudio.play();
+        playBtn.querySelector('span').textContent = ' Pause Music';
+      } else {
+        heroAudio.pause();
+        playBtn.querySelector('span').textContent = ' Hear the Music';
+      }
+    });
+  }
 
 });
 </script>
