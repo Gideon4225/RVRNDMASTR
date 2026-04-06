@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="RVRND - Florida-based musical project at the collision of the sacred and the strange. Dark folk music from the mangrove into the dark.">
+<title>RVRND</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Cinzel+Decorative:wght@400;700&family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>𓋹</text></svg>">
+<style>
+:root {
+  --ash:    #0e0b08;
+  --bog:    #1a1208;
+  --stone:  #2a1f10;
+  --drift:  #6b5340;
+  --gold:   #c8921a;
+  --gilt:   #d4a847;
+  --reed:   #e8c87a;
+  --vellum: #f0e8d8;
+  --muted:  rgba(240,232,216,0.5);
+  --faint:  rgba(200,146,26,0.1);
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: var(--ash);
+  color: var(--vellum);
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-size: 18px;
+  line-height: 1.8;
+  overflow-x: hidden;
+}
+
+body::before {
+  content:''; position:fixed; top:0;left:0;right:0;bottom:0; z-index:999; pointer-events:none;
+  opacity:0.04;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:256px;
+}
+
+::-webkit-scrollbar { width:3px; }
+::-webkit-scrollbar-track { background:var(--ash); }
+::-webkit-scrollbar-thumb { background:var(--drift); }
+
+nav {
+  position:fixed; top:0; width:100%; z-index:500;
+  padding:0 4rem;
+  background:rgba(14,11,8,0.97);
+  border-bottom:1px solid rgba(200,146,26,0.15);
+  backdrop-filter:blur(12px);
+  display:flex; align-items:stretch; justify-content:space-between;
+  -webkit-backdrop-filter:blur(12px);
+}
+
+.nav-logo {
+  font-family:'Cinzel Decorative', serif;
+  font-size:14px; letter-spacing:0.5em;
+  color:var(--gold); text-decoration:none;
+  display:flex; align-items:center; gap:10px; padding:1.4rem 0;
+}
+.nav-ankh { font-family:'IM Fell English',serif; font-size:20px; color:var(--gilt); }
+
+nav ul { list-style:none; display:flex; align-items:center; }
+nav ul li a {
+  display:block; font-family:'IM Fell English',serif; font-style:italic;
+  font-size:14px; letter-spacing:0.15em; color:var(--muted);
+  text-decoration:none; padding:1.4rem 1.4rem;
+  border-bottom:1px solid transparent; transition:color 0.3s, border-color 0.3s;
+}
+nav ul li a:hover, nav ul li a:focus { color:var(--gilt); border-bottom-color:var(--gold); }
+nav ul li a:focus-visible { outline:2px solid var(--gold); outline-offset:-2px; }
+
+.nav-toggle { display:none; background:none; border:none; color:var(--gilt); font-size:22px; cursor:pointer; padding:1rem; }
+.nav-toggle:focus-visible { outline:2px solid var(--gold); }
+
+#home {
+  min-height:100vh;
+  display:flex; flex-direction:column; justify-content:center; align-items:center;
+  text-align:center; padding:8rem 2rem 6rem;
+  position:relative; overflow:visible;
+}
+
+#home::before {
+  content:''; position:absolute; top:0;left:0;right:0;bottom:0;
+  background:
+    radial-gradient(ellipse 90% 65% at 50% 45%, rgba(200,146,26,0.055) 0%, transparent 65%),
+    radial-gradient(ellipse 55% 75% at 10% 65%, rgba(74,25,66,0.22) 0%, transparent 55%),
+    radial-gradient(ellipse 55% 75% at 90% 25%, rgba(26,18,8,0.55) 0%, transparent 55%),
+    radial-gradient(ellipse 100% 40% at 50% 100%, rgba(8,5,2,0.9) 0%, transparent 65%);
+}
+
+.hero-frame {
+  position:absolute; top:6rem;right:20%;bottom:0;left:20%;
+  border-width:0 0.5px 0.5px 0.5px;
+  border-style:solid;
+  border-color:rgba(200,146,26,0.15);
+  display:flex; align-items:center; justify-content:center;
+  z-index:10;
+}
+
+.hero-hand {
+  position:absolute; top:70%; left:50%; transform:translate(-50%, -50%);
+  max-height:70vh; width:auto;
+  z-index:0;
+  opacity:0;
+  animation:handFadeIn 2s 5s forwards, handFloat 6s ease-in-out infinite;
+  filter: drop-shadow(0 0 3px rgba(200,146,26,0.85)) sepia(20%) saturate(200%);
+}
+@keyframes handFloat {
+  0%, 100% { transform:translate(-50%, -50%) translateY(0); filter: drop-shadow(0 0 3px rgba(200,146,26,0.85)) sepia(20%) saturate(200%); }
+  50% { transform:translate(-50%, -50%) translateY(-6px); filter: drop-shadow(0 0 9px rgba(200,146,26,1)) sepia(30%) saturate(250%); }
+}
+@keyframes handFadeIn {
+  to { opacity:1; }
+}
+
+.hero-inner { position:relative; z-index:5; max-width:860px; text-align:center; margin-top:1.5rem; }
+
+.hero-title-wrap {
+  display:flex; flex-direction:column; align-items:center;
+  position:relative;
+  opacity:0; animation:riseIn 2s 0.45s cubic-bezier(.16,1,.3,1) forwards;
+}
+.hero-title-wrap .hero-title-line {
+  width:90px; height:1px;
+  background:linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+.hero-ankh {
+  font-family:'IM Fell English',serif;
+  font-size:86px;
+  color:var(--gold);
+  display:block;
+  line-height:1;
+  margin:1.5rem 0;
+  opacity:0;
+  position:relative;
+  z-index:2;
+  animation:ankhRise 2s 4.8s cubic-bezier(.16,1,.3,1) forwards,
+             ankhFloat 3s ease-in-out infinite,
+             ankhHue 4s linear infinite;
+}
+@keyframes ankhHue {
+  0%, 100% { filter:hue-rotate(0deg) brightness(1) saturate(1); }
+  50% { filter:hue-rotate(30deg) brightness(1.2) saturate(1.3); }
+}
+.hero-ankh::before {
+  content:''; position:absolute; top:50%; left:50%;
+  transform:translate(-50%, -50%);
+  width:138px; height:138px;
+  background:radial-gradient(ellipse at center, rgba(200,146,26,0.25) 0%, rgba(212,168,71,0.1) 40%, transparent 70%);
+  animation:mist 3s ease-in-out infinite;
+  pointer-events:none;
+  z-index:-1;
+}
+
+@keyframes ankhFloat {
+  0%, 100% { transform:translateY(0); }
+  50% { transform:translateY(-8px); }
+}
+
+@keyframes ankhRise {
+  from { opacity:0; transform:translateY(22px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+@keyframes mist {
+  0%, 100% { opacity:0.4; transform:translate(-50%, -50%) scale(0.9); }
+  50% { opacity:0.8; transform:translate(-50%, -50%) scale(1.05); }
+}
+
+.hero-title {
+  font-family:'Cinzel Decorative', serif;
+  font-size:clamp(58px,13vw,138px);
+  letter-spacing:-0.04em; color:#ff7733; line-height:1;
+  margin-top:1.5rem;
+  opacity:0;
+  animation:writeIn 1.2s ease forwards;
+  text-shadow: 
+    0 0 3px #ff7733,
+    0 0 6px #ff7733,
+    0 0 15px #ff4500;
+}
+
+.hero-title .letter {
+  display:inline-block;
+  opacity:0;
+  animation:writeIn 1.5s ease forwards;
+}
+.hero-title .letter:nth-child(1) { animation-delay:0.5s; margin-right:-0.12em; }
+.hero-title .letter:nth-child(2) { animation-delay:1.2s; }
+.hero-title .letter:nth-child(3) { animation-delay:1.9s; }
+.hero-title .letter:nth-child(4) { animation-delay:2.6s; }
+.hero-title .letter:nth-child(5) { animation-delay:3.3s; }
+
+@keyframes writeIn {
+  0% { opacity:0; transform:scale(1.5); }
+  40% { opacity:1; transform:scale(1); }
+  100% { opacity:1; transform:scale(1); }
+}
+
+.hero-title::after {
+  content:'';
+  display:block; width:45%; height:1px; margin:1.4rem auto 0;
+  background:linear-gradient(90deg, transparent, rgba(200,146,26,0.6), transparent);
+}
+
+.hero-sub {
+  font-family:'IM Fell English',serif; font-style:italic;
+  font-size:clamp(11px,1.5vw,14px); letter-spacing:0.3em; color:var(--muted);
+  text-align:center;
+}
+.hero-sub .hero-sub-line, .hero-sub .gold-rule {
+  opacity:0;
+  animation:fadeIn 1s 5s forwards;
+}
+.hero-sub .w, .hero-sub .d {
+  opacity:0;
+  display:inline-block;
+  animation:wordReveal 0.4s ease forwards;
+}
+.hero-sub .w:nth-child(3) { animation-delay:5.3s; }
+.hero-sub .w:nth-child(4) { animation-delay:5.8s; }
+.hero-sub .w:nth-child(5) { animation-delay:6.3s; }
+.hero-sub .d:nth-child(6) { animation-delay:6.8s; }
+.hero-sub .w:nth-child(7) { animation-delay:7.3s; }
+.hero-sub .w:nth-child(8) { animation-delay:7.8s; }
+.hero-sub .w:nth-child(9) { animation-delay:8.3s; }
+
+@keyframes fadeIn {
+  to { opacity:1; }
+}
+@keyframes wordReveal {
+  to { opacity:1; }
+}
+.hero-sub-line {
+  display:block; width:80px; height:1px; background:linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin:0 auto 0.5rem;
+}
+.hero-sub span { display:inline; margin:0; }
+.hero-sub .divider { margin:0 0.8rem; color:var(--gold); }
+
+.hero-cta {
+  display:flex; gap:1.5rem; justify-content:center; flex-wrap:wrap; margin-top:1rem;
+  opacity:0; animation:riseIn 2s 5.5s cubic-bezier(.16,1,.3,1) forwards;
+}
+
+@keyframes riseIn {
+  from { opacity:0; transform:translateY(22px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+.btn {
+  font-family:'IM Fell English',serif; font-style:italic;
+  font-size:13px; letter-spacing:0.28em;
+  padding:13px 34px; text-decoration:none;
+  border:0.5px solid var(--gold); color:var(--gold);
+  position:relative; overflow:hidden; transition:color 0.4s;
+  display:inline-block;
+}
+.btn::before {
+  content:''; position:absolute; inset:0; background:var(--gold);
+  transform:scaleX(0); transform-origin:left;
+  transition:transform 0.4s cubic-bezier(.16,1,.3,1);
+}
+.btn:hover::before { transform:scaleX(1); }
+.btn:hover { color:var(--ash); }
+.btn span { position:relative; z-index:1; }
+.btn.ghost { border-color:rgba(240,232,216,0.2); color:rgba(240,232,216,0.45); }
+.btn.ghost::before { background:rgba(240,232,216,0.08); }
+.btn.ghost:hover { color:var(--vellum); }
+.btn:focus-visible { outline:2px solid var(--gold); outline-offset:3px; }
+
+.section-wrap { max-width:1080px; margin:0 auto; padding:7rem 3rem; }
+
+.section-border { border-top:0.5px solid rgba(200,146,26,0.1); }
+
+.section-header { text-align:center; margin-bottom:3rem; }
+
+.eyebrow {
+  display:inline-flex; align-items:center; gap:1rem; margin-bottom:1.2rem;
+  font-family:'IM Fell English',serif; font-style:italic;
+  font-size:11px; letter-spacing:0.4em; text-transform:uppercase; color:var(--gold);
+}
+.eyebrow::before, .eyebrow::after { content:'✦'; font-size:7px; color:rgba(200,146,26,0.45); }
+
+h2 {
+  font-family:'Cinzel Decorative',serif; font-weight:400;
+  font-size:clamp(20px,3.5vw,34px); letter-spacing:0.12em;
+  color:var(--vellum); line-height:1.25;
+}
+
+.gold-rule {
+  width:100px; height:1px; margin:1rem auto 0;
+  background:linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+.about-grid { display:grid; grid-template-columns:5fr 7fr; gap:5rem; align-items:start; }
+
+.artist-frame { position:relative; }
+.artist-frame::before {
+  content:''; position:absolute; top:-14px;right:-14px;bottom:-14px;left:-14px;
+  border:0.5px solid rgba(200,146,26,0.18); pointer-events:none;
+}
+.artist-frame::after {
+  content:''; position:absolute; top:-26px;right:-26px;bottom:-26px;left:-26px;
+  border:0.5px solid rgba(200,146,26,0.07); pointer-events:none;
+}
+
+.artist-frame .corner {
+  position:absolute; width:16px; height:16px; z-index:2;
+}
+.artist-frame .corner::before, .artist-frame .corner::after {
+  content:''; position:absolute; background:var(--gold);
+}
+.artist-frame .corner::before { width:100%; height:1px; top:0; left:0; }
+.artist-frame .corner::after  { width:1px; height:100%; top:0; left:0; }
+.artist-frame .corner.tr { top:-14px; right:-14px; transform:rotate(90deg); }
+.artist-frame .corner.bl { bottom:-14px; left:-14px; transform:rotate(270deg); }
+.artist-frame .corner.br { bottom:-14px; right:-14px; transform:rotate(180deg); }
+.artist-frame .corner.tl { top:-14px; left:-14px; }
+
+.artist-img {
+  aspect-ratio:3/4; background:var(--bog);
+  border:0.5px solid rgba(200,146,26,0.12); position:relative; overflow:hidden;
+}
+
+.pull-quote {
+  background:linear-gradient(135deg, rgba(200,146,26,0.08), rgba(26,18,8,0.6));
+  border-left:2px solid var(--gold);
+  padding:1.5rem 1.8rem;
+  margin:2rem 0;
+  font-family:'IM Fell English',serif;
+  font-style:italic;
+  font-size:22px;
+  color:var(--gilt);
+  position:relative;
+}
+.pull-quote::before {
+  content:'✦';
+  position:absolute; top:0.8rem; left:1rem;
+  font-size:10px; color:var(--gold);
+}
+
+.lyrics-layout { display:grid; grid-template-columns:230px 1fr; gap:3.5rem; align-items:start; }
+
+.lyrics-nav {
+  position:sticky; top:6rem;
+  border:0.5px solid rgba(200,146,26,0.15);
+  display:flex; flex-direction:column;
+}
+
+.lyric-tab {
+  font-family:'IM Fell English', serif; font-style:italic;
+  font-size:14px; letter-spacing:0.06em;
+  padding:14px 18px; text-align:left;
+  background:none; color:var(--muted); cursor:pointer;
+  border:none; border-bottom:0.5px solid rgba(200,146,26,0.08);
+  transition:all 0.25s;
+  width:100%;
+}
+.lyric-tab:last-child { border-bottom:none; }
+.lyric-tab:hover { background:var(--faint); color:var(--gilt); }
+.lyric-tab:focus-visible { outline:2px solid var(--gold); outline-offset:-2px; }
+.lyric-tab.active { background:var(--faint); color:var(--gilt); border-left:2px solid var(--gold); padding-left:16px; }
+
+.lyric-panel { display:none; }
+.lyric-panel.active { display:block; animation:fadeSlide 0.4s ease; }
+
+@keyframes fadeSlide {
+  from { opacity:0; transform:translateX(10px); }
+  to   { opacity:1; transform:translateX(0); }
+}
+
+.lyric-panel h3 {
+  font-family:'IM Fell English', serif; font-style:italic; font-size:19px; letter-spacing:0.1em; color:var(--vellum); margin-bottom:4px;
+}
+.lyric-meta { font-style:italic; font-size:12px; letter-spacing:0.2em; color:var(--gold); display:block; margin-bottom:2rem; }
+
+.lyric-body {
+  font-family:'IM Fell English', serif; font-style:italic; font-size:17px; color:rgba(240,232,216,0.6);
+  line-height:1.25; white-space:pre-line;
+}
+.lyric-body .ch {
+  color:var(--gilt); font-style:italic; display:block;
+  padding-left:1.4rem; border-left:1px solid rgba(200,146,26,0.3); margin:0;
+}
+.lyric-body .verse {
+  margin:0;
+  display:block;
+}
+
+.show-list { display:flex; flex-direction:column; gap:2px; }
+
+.show-row {
+  display:grid; grid-template-columns:140px 1fr 1fr auto;
+  align-items:center; gap:2rem; padding:1.5rem 2rem;
+  background:var(--bog); border:0.5px solid rgba(200,146,26,0.08);
+  position:relative; overflow:hidden; transition:border-color 0.3s;
+}
+.show-row::before {
+  content:''; position:absolute; left:0; top:0; bottom:0; width:2px;
+  background:var(--gold); transform:scaleY(0);
+  transition:transform 0.35s cubic-bezier(.16,1,.3,1);
+}
+.show-row:hover { border-color:rgba(200,146,26,0.3); }
+.show-row:hover::before { transform:scaleY(1); }
+
+.show-date { font-family:'Cinzel Decorative',serif; font-size:11px; letter-spacing:0.1em; color:var(--gold); }
+.show-venue { font-size:17px; color:var(--vellum); }
+.show-city { font-size:14px; font-style:italic; color:var(--muted); }
+
+.ticket-link {
+  font-family:'IM Fell English',serif; font-style:italic;
+  font-size:12px; letter-spacing:0.2em; padding:8px 20px;
+  border:0.5px solid var(--gold); color:var(--gold);
+  text-decoration:none; white-space:nowrap;
+  transition:background 0.3s, color 0.3s;
+}
+.ticket-link:hover { background:var(--gold); color:var(--ash); }
+.ticket-link:focus-visible { outline:2px solid var(--gold); outline-offset:2px; }
+
+.shows-note {
+  text-align:center; margin-top:3rem;
+  font-family:'IM Fell English',serif; font-style:italic;
+  font-size:16px; color:var(--muted); letter-spacing:0.08em;
+}
+
+.contact-sub {
+  font-weight:300; font-style:italic; font-size:18px; color:var(--muted);
+  max-width:480px; margin:0 auto 1.5rem; line-height:1.4;
+}
+
+.contact-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; max-width:720px; margin:0 auto 2rem; }
+
+.c-card {
+  border:0.5px solid rgba(200,146,26,0.14); padding:2rem 1.5rem;
+  background:var(--bog); position:relative; overflow:hidden;
+  transition:border-color 0.3s;
+}
+.c-card::before {
+  content:''; position:absolute; top:0;left:0;right:0;bottom:0;
+  background:linear-gradient(135deg, rgba(200,146,26,0.05), transparent 60%);
+  pointer-events:none;
+}
+.c-link {
+  font-family:'Cinzel Decorative', serif; font-size:18px;
+  color:#ff7733; text-decoration:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:100%;
+  min-height:60px;
+  transition:color 0.3s;
+  position:relative;
+  z-index:2;
+  background:transparent;
+  cursor:pointer;
+  text-shadow: 
+    0 0 3px #ff7733,
+    0 0 6px #ff7733,
+    0 0 15px #ff4500;
+}
+.c-link:hover { color:#ff9955; text-shadow: 
+    0 0 5px #ff7733,
+    0 0 10px #ff7733,
+    0 0 20px #ff4500; }
+.c-link:focus-visible { outline:2px solid var(--gold); outline-offset:2px; }
+
+.social-strip {
+  display:flex; gap:2rem; justify-content:center; flex-wrap:wrap;
+  padding-top:1.5rem; border-top:0.5px solid rgba(200,146,26,0.1);
+}
+.soc {
+  font-family:'IM Fell English',serif; font-style:italic;
+  font-size:15px; letter-spacing:0.1em; color:var(--muted);
+  text-decoration:none; position:relative; transition:color 0.25s;
+}
+.soc::after {
+  content:''; position:absolute; bottom:-3px; left:0; right:0;
+  height:0.5px; background:var(--gold);
+  transform:scaleX(0); transform-origin:center;
+  transition:transform 0.3s;
+}
+.soc:hover { color:var(--gilt); }
+.soc:hover::after { transform:scaleX(1); }
+.soc:focus-visible { outline:2px solid var(--gold); outline-offset:4px; }
+
+footer {
+  border-top:0.5px solid rgba(200,146,26,0.12);
+  padding:2.5rem 4rem;
+  display:flex; justify-content:space-between; align-items:center;
+  font-style:italic; font-size:13px; color:rgba(240,232,216,0.22);
+  letter-spacing:0.08em; flex-wrap:wrap; gap:1rem;
+}
+.footer-center { display:flex; flex-direction:column; align-items:center; gap:3px; }
+.footer-ankh { font-family:'IM Fell English',serif; font-size:26px; color:rgba(200,146,26,0.28); }
+
+.skip-link {
+  position:absolute; top:-100px; left:50%; transform:translateX(-50%);
+  background:var(--gold); color:var(--ash); padding:0.5rem 1rem;
+  z-index:1000; transition:top 0.3s;
+}
+.skip-link:focus { top:10px; }
+
+@media(max-width:900px){
+  .hero-hand { max-height:40vh; }
+  .hero-frame { right:5% !important; left:5% !important; }
+  nav { z-index:1000; }
+  nav ul { display:none; position:absolute; top:100%; left:0; right:0; flex-direction:column; background:rgba(14,11,8,0.99); border-bottom:0.5px solid rgba(200,146,26,0.2); }
+  nav ul.open { display:flex; }
+  nav ul li a { padding:1rem 2rem; }
+  .nav-toggle { display:block; }
+  .section-wrap { padding:5rem 1.5rem; }
+  .about-grid { grid-template-columns:1fr; gap:3.5rem; }
+  .artist-frame { max-width:340px; margin:0 auto; }
+  .lyrics-layout { grid-template-columns:1fr; gap:2rem; }
+  .lyrics-nav { position:static; flex-direction:row; flex-wrap:wrap; border:none; gap:4px; }
+  .lyric-tab { border:0.5px solid rgba(200,146,26,0.15) !important; padding:8px 14px !important; border-left:none !important; }
+  .lyric-tab.active { border-bottom:2px solid var(--gold) !important; }
+  .show-row { grid-template-columns:1fr auto; gap:0.8rem; padding:1.2rem; }
+  .show-date { grid-column:1/3; }
+  .show-city { grid-column:1; grid-row:2; }
+  .ticket-link { grid-row:2; grid-column:2; }
+  .contact-cards { grid-template-columns:1fr; max-width:360px; }
+  footer { padding:2rem 1.5rem; flex-direction:column; text-align:center; }
+}
+</style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<nav id="main-nav" aria-label="Main navigation">
+  <a href="#home" class="nav-logo" aria-label="RVRND home">
+    <span class="nav-ankh" aria-hidden="true">𓋹</span> RVRND
+  </a>
+  <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation menu" onclick="this.setAttribute('aria-expanded', document.querySelector('#nav-menu').classList.toggle('open') || true)">☰</button>
+  <ul id="nav-menu">
+    <li><a href="#about">About</a></li>
+    <li><a href="#lyrics">Lyrics</a></li>
+    <li><a href="#shows">Shows</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<main id="main-content">
+
+<section id="home" aria-labelledby="hero-title">
+  <img src="hand.png" alt="" class="hero-hand" aria-hidden="true">
+  <div class="hero-frame" aria-hidden="true">
+    <div class="hero-inner">
+      <h1 id="hero-title" class="hero-title">
+        <span class="letter l1">R</span><span class="letter l2">V</span><span class="letter l3">R</span><span class="letter l4">N</span><span class="letter l5">D</span>
+      </h1>
+      <div class="hero-title-wrap">
+        <div class="hero-title-line"></div>
+        <span class="hero-ankh" aria-hidden="true">𓋹</span>
+        <div class="hero-title-line" style="width:52px;"></div>
+      </div>
+      <p class="hero-sub"><span class="hero-sub-line"></span><br><span class="gold-rule" style="width:50px;margin:0.8rem auto;"></span><br><span class="w">into</span> <span class="w">the</span> <span class="w">darkness</span> <span class="d">—</span> <span class="w">toward</span> <span class="w">each</span> <span class="w">other</span></p>
+      <div class="hero-cta">
+        <a href="#" class="btn"><span>Hear the Music</span></a>
+        <a href="#about" class="btn ghost"><span>Enter</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about" class="section-border" aria-labelledby="about-heading">
+<div class="section-wrap">
+  <div class="about-grid">
+    <div class="artist-frame" aria-hidden="true">
+      <span class="corner tl"></span>
+      <span class="corner tr"></span>
+      <span class="corner bl"></span>
+      <span class="corner br"></span>
+      <div class="artist-img">
+        <img src="artist.png" alt="RVRND Artist" style="width:100%;height:100%;object-fit:cover;">
+      </div>
+    </div>
+    <div class="about-text">
+      <div class="eyebrow">The Artist</div>
+      <h2 id="about-heading">Away, Into the Gilded Dark</h2>
+      <div class="gold-rule" style="margin:1.8rem 0; width:70px; margin-left:0;" aria-hidden="true"></div>
+      <p>RVRND is a Florida-based musical project built at the collision of the sacred, the liminal, and the deeply human — where Southern Gothic myth meets ancient religious tradition, where the mangrove and sand give way to cathedral, and the human soul takes form in the shadow of a blaze.</p>
+      <div class="pull-quote">
+        <p>Dust to dust... but Hell's being alone.</p>
+      </div>
+      <p>Shaped by the warmth of the sun and the depth of the swamp — RVRND asks the oldest questions about why we are here, what we owe one another, and what shapes us into who we are.</p>
+      <p>RVRND will brave the darkness and grasp at the light, and you are most welcome here...</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<section id="lyrics" class="section-border" aria-labelledby="lyrics-heading">
+<div class="section-wrap">
+  <div class="section-header">
+    <div class="eyebrow">The Words</div>
+    <h2 id="lyrics-heading">Lyrics</h2>
+    <div class="gold-rule" aria-hidden="true"></div>
+  </div>
+  <div class="lyrics-layout">
+    <nav class="lyrics-nav" aria-label="Song list">
+      <button class="lyric-tab active" data-lyric="witch">The Witch of Alachua</button>
+      <button class="lyric-tab" data-lyric="eulogy">Eulogy (1903)</button>
+      <button class="lyric-tab" data-lyric="romans">Romans 1:18</button>
+      <button class="lyric-tab" data-lyric="parts">These Parts</button>
+      <button class="lyric-tab" data-lyric="valhalla">Valhalla (Get Along)</button>
+    </nav>
+
+    <div>
+      <div id="lyr-witch" class="lyric-panel active" role="tabpanel" aria-labelledby="lyric-tab-witch">
+        <h3>The Witch of Alachua</h3>
+        <div class="lyric-body">She got them blue eyes staring
+Short hair with a touch a satin
+Smooth voice it's a lie I reckon
+And she is here to take your soul
+
+Long legs and wicked smile
+Drove south for a little while
+Got out at the 0 mile
+Eyes meet, and I knew I was gone.
+
+<span class="ch">I don't know what you've been told, but I heard something strange.
+That a witch from Alachua comin' out the mangroves could kill you with her gaze
+From Miami-Dade to Tallahassee, the sand ain't what it seems
+That witch from Alachua, coming out the mangroves will take from you, everything.</span>
+
+Don't run she'll hear you going
+Sit tight don't stress you'll blow it
+You're better off to show that you won't ever walk away
+
+I hope to God I make it
+I'm too young to die I'm praying
+One glance gave shallow breathing, I look up, like a shadow she was gone.
+
+<span class="ch">She'll tear through like a storm
+And bury you alone
+You'll sink down in that swamp
+You'll never see that sun again.</span></div>
+      </div>
+
+      <div id="lyr-eulogy" class="lyric-panel" role="tabpanel" aria-labelledby="lyric-tab-eulogy">
+        <h3>Eulogy (1903)</h3>
+        <div class="lyric-body">If I draped you in these flowers
+Could you smell anymore sweet
+I don't think it's even worth a try.
+I could lay right here for hours in the garden at your feet
+Until my clock tells me I'm out of time.
+
+Spring is blooming near the river where we always used to meet
+All the birds are calling as they fly.
+The water flows into the lake your daddy built in '83
+A sacred place where we could always hide
+
+<span class="ch">Oh oh I'd feel complete
+Oh oh if you'd marry me.</span>
+
+I grew strong over the summers when I worked to buy a ring
+My calloused hands and blackened shirt were fine
+Digging down into the darkness you were always there with me
+Guiding me to come back out alive.
+
+<span class="ch">Oh oh I'll be complete
+Oh oh when you marry me</span>
+
+A bitter fall came to the valley where we'd always run and sing
+All the beauty in the world to find.
+I'll stay right here until we find a way to make you well again
+I won't give up until the end of time.
+
+<span class="ch">Oh oh You complete me
+Oh oh please stay with me</span>
+
+Another winter and I walked down to the river where we'd meet
+I brought the flowers that you loved in life
+I draped the flowers over you and took my spot right at your feet
+I'm not sure that I can even cry.
+
+<span class="ch">Oh oh I'm incomplete
+Oh oh please wait for me</span></div>
+      </div>
+
+      <div id="lyr-romans" class="lyric-panel" role="tabpanel" aria-labelledby="lyric-tab-romans">
+        <h3>Romans 1:18</h3>
+        <div class="lyric-body">The pews are all empty, the Parish has gone home
+The church bells didn't ring, it's silent in these halls.
+
+A prayer is all you need, to make amends with God
+But can we heal this pain, now that you're really gone.
+
+<span class="ch">But I still feel your rage, it's glaring back at me.
+So why's it feel so strange, that we'll never talk again</span>
+
+<p class="verse">The message isn't done, your spirit floods my soul
+Kneeling at your cross, I'd swear I'm going home.</p>
+
+So take me as I am, or don't take me at all
+Dust to dust they say, but hell's being alone.
+
+<span class="ch">Yeah I still feel that rage, piercing right through me
+So why can't I explain, this love that still remains.
+It remains and remains and remains and remains.</span></div>
+      </div>
+
+      <div id="lyr-parts" class="lyric-panel" role="tabpanel" aria-labelledby="lyric-tab-parts">
+        <h3>These Parts</h3>
+        <div class="lyric-body">I know that you're done
+Oh I've been there too
+These battles you've fought
+The ghosts in your room
+
+Does it seep through your skin?
+These parts you won't show
+The scars you have gained
+The parts of you lost.
+
+<span class="ch">Oh baby I can't save your mind, but I can save your soul.
+I'll pick up these pieces it broke into, oh I'll build up
+These things take their toll, wear you down, and they make you feel small.
+But deep down we both know that you are much more than these parts. These parts.</span>
+
+I wish I didn't know
+Oh I know how it feels
+What's it like to be broken
+In a way you can't mend
+
+These parts you won't show
+Oh these pieces laid bare.
+We'll just have to be gentle,
+And place each piece with care.</div>
+      </div>
+
+      <div id="lyr-valhalla" class="lyric-panel" role="tabpanel" aria-labelledby="lyric-tab-valhalla">
+        <h3>Valhalla (Get Along)</h3>
+        <div class="lyric-body">I know it's hard to ignore that deep feeling of emptiness
+Swelling that is ever ceasing
+But lend me your ear and I'll play you a tune
+That might help you curb all the existential blues.
+
+<span class="ch">I want to know what the plan is
+I want to see what we should do
+I want to climb into Valhalla
+And get down to brass tacks at noon.</span>
+
+A difference is all in the making
+And making is what we should do
+Let's rebuild that stone tower at Babel
+In spite of these devil's cheap thrills.
+
+<span class="ch">And I can't even imagine why we can't all get along.</span>
+
+We all fight like hell till we're broken
+We turn a blind eye till we're sore
+Kicking and screaming from ancients
+It's almost becoming a bore
+
+So let's take a chance on each other
+Let's stop funding these overseas wars
+Let's bake up some pies and have dinner
+We'll open our arms and our doors.
+
+<span class="ch">And I can't even imagine why we can't just get along.</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section id="shows" class="section-border" aria-labelledby="shows-heading">
+<div class="section-wrap">
+  <div class="section-header">
+    <div class="eyebrow">Live</div>
+    <h2 id="shows-heading">Shows</h2>
+    <div class="gold-rule" aria-hidden="true"></div>
+  </div>
+  <div class="show-list">
+    <article class="show-row">
+      <div class="show-date">Coming Soon</div>
+      <div class="show-venue">Venue Name</div>
+      <div class="show-city">Gainesville, FL</div>
+      <a href="#" class="ticket-link">Tickets</a>
+    </article>
+    <article class="show-row">
+      <div class="show-date">Coming Soon</div>
+      <div class="show-venue">Venue Name</div>
+      <div class="show-city">Tampa, FL</div>
+      <a href="#" class="ticket-link">Tickets</a>
+    </article>
+    <article class="show-row">
+      <div class="show-date">Coming Soon</div>
+      <div class="show-venue">Venue Name</div>
+      <div class="show-city">Orlando, FL</div>
+      <a href="#" class="ticket-link">Tickets</a>
+    </article>
+  </div>
+  <p class="shows-note">More dates descending from the dark. Follow for word.</p>
+</div>
+</section>
+
+<section id="contact" class="section-border" aria-labelledby="contact-heading">
+<div class="section-wrap" style="text-align:center; padding:4rem 3rem;">
+  <div class="section-header" style="margin-bottom:2rem;">
+    <div class="eyebrow">Reach Out</div>
+    <h2 id="contact-heading">The Door Is Open</h2>
+    <div class="gold-rule" aria-hidden="true"></div>
+  </div>
+  <p class="contact-sub">For booking, press, and collaboration — reach through the dark. The light is on.</p>
+  <div class="contact-cards">
+    <div class="c-card">
+      <a href="mailto:matthewdquick@gmail.com" class="c-link">Booking</a>
+    </div>
+    <div class="c-card">
+      <a href="mailto:matthewdquick@gmail.com" class="c-link">Press</a>
+    </div>
+    <div class="c-card">
+      <a href="mailto:matthewdquick@gmail.com" class="c-link">General</a>
+    </div>
+  </div>
+  <div class="social-strip">
+    <a href="https://www.instagram.com/rvrnd83?igsh=MWs4OTdvMWRybWp4&utm_source=qr" class="soc" target="_blank" rel="noopener noreferrer">Instagram</a>
+    <a href="#" class="soc">Spotify</a>
+    <a href="#" class="soc">Apple Music</a>
+    <a href="#" class="soc">YouTube</a>
+    <a href="#" class="soc">TikTok</a>
+  </div>
+</div>
+</section>
+
+</main>
+
+<footer>
+  <span>&copy; 2026 RVRND &middot; All Rights Reserved</span>
+  <div class="footer-center">
+    <div class="footer-ankh" aria-hidden="true">𓋹</div>
+    <span>RVRND - FLORIDA</span>
+  </div>
+  <span>Handcrafted by RVRND</span>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const lyricTabs = document.querySelectorAll('.lyric-tab');
+  const lyricPanels = document.querySelectorAll('.lyric-panel');
+
+  function showLyric(id, btn) {
+    lyricPanels.forEach(p => {
+      p.classList.remove('active');
+      p.setAttribute('hidden', '');
+    });
+    lyricTabs.forEach(b => b.classList.remove('active'));
+    
+    const panel = document.getElementById('lyr-' + id);
+    panel.classList.add('active');
+    panel.removeAttribute('hidden');
+    btn.classList.add('active');
+  }
+
+  lyricTabs.forEach(tab => {
+    tab.addEventListener('click', () => showLyric(tab.dataset.lyric, tab));
+  });
+
+  const navLinks = document.querySelectorAll('#main-nav a');
+  const navMenu = document.querySelector('#nav-menu');
+  const navToggle = document.querySelector('.nav-toggle');
+
+  navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      navMenu.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && navMenu.classList.contains('open')) {
+      navMenu.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      navToggle.focus();
+    }
+  });
+
+});
+</script>
+</body>
+</html>
