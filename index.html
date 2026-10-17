@@ -102,11 +102,11 @@ nav ul li a:focus-visible { outline:2px solid var(--gold); outline-offset:-2px; 
 }
 
 .hero-hand {
-  position:absolute; top:70%; left:50%; transform:translate(-50%, -50%);
-  max-height:70vh; width:auto;
+  position:absolute; top:65%; left:50%; transform:translate(-50%, -50%) scale(0.95);
+  max-height:41vh; max-width:48%; width:auto;
   z-index:0;
   opacity:0;
-  animation:handFadeIn 2s 5s forwards, handFloat 6s ease-in-out infinite;
+  animation:handFadeIn 4s 6s cubic-bezier(.25,.1,.25,1) forwards, handFloat 6s ease-in-out infinite;
   filter: drop-shadow(0 0 3px rgba(200,146,26,0.85)) sepia(20%) saturate(200%);
 }
 @keyframes handFloat {
@@ -114,15 +114,15 @@ nav ul li a:focus-visible { outline:2px solid var(--gold); outline-offset:-2px; 
   50% { transform:translate(-50%, -50%) translateY(-6px); filter: drop-shadow(0 0 9px rgba(200,146,26,1)) sepia(30%) saturate(250%); }
 }
 @keyframes handFadeIn {
-  to { opacity:1; }
+  to { opacity:1; transform:translate(-50%, -50%) scale(1); }
 }
 
-.hero-inner { position:relative; z-index:5; max-width:860px; text-align:center; margin-top:1.5rem; }
+.hero-inner { position:relative; z-index:5; max-width:860px; text-align:center; margin-top:2.5rem; }
 
 .hero-title-wrap {
   display:flex; flex-direction:column; align-items:center;
   position:relative;
-  opacity:0; animation:riseIn 2s 0.45s cubic-bezier(.16,1,.3,1) forwards;
+  opacity:0; animation:riseIn 2s 0.45s cubic-bezier(.25,.1,.25,1) forwards;
 }
 .hero-title-wrap .hero-title-line {
   width:90px; height:1px;
@@ -139,10 +139,11 @@ nav ul li a:focus-visible { outline:2px solid var(--gold); outline-offset:-2px; 
   opacity:0;
   position:relative;
   z-index:2;
-  animation:ankhRise 2s 4.8s cubic-bezier(.16,1,.3,1) forwards,
+  animation:ankhRise 3s 3.6s cubic-bezier(.25,.1,.25,1) forwards,
              ankhFloat 3s ease-in-out infinite,
-             ankhHue 4s linear infinite;
+             ankhHue 6s linear infinite;
 }
+
 @keyframes ankhHue {
   0%, 100% { filter:hue-rotate(0deg) brightness(1) saturate(1); }
   50% { filter:hue-rotate(30deg) brightness(1.2) saturate(1.3); }
@@ -188,13 +189,13 @@ nav ul li a:focus-visible { outline:2px solid var(--gold); outline-offset:-2px; 
 .hero-title .letter {
   display:inline-block;
   opacity:0;
-  animation:writeIn 1.5s ease forwards;
+  animation:writeIn 2s cubic-bezier(.25,.1,.25,1) forwards;
 }
-.hero-title .letter:nth-child(1) { animation-delay:0.5s; margin-right:-0.12em; }
-.hero-title .letter:nth-child(2) { animation-delay:1.2s; }
-.hero-title .letter:nth-child(3) { animation-delay:1.9s; }
-.hero-title .letter:nth-child(4) { animation-delay:2.6s; }
-.hero-title .letter:nth-child(5) { animation-delay:3.3s; }
+.hero-title .letter:nth-child(1) { animation-delay:0.2s; margin-right:-0.12em; }
+.hero-title .letter:nth-child(2) { animation-delay:0.7s; }
+.hero-title .letter:nth-child(3) { animation-delay:1.2s; }
+.hero-title .letter:nth-child(4) { animation-delay:1.7s; }
+.hero-title .letter:nth-child(5) { animation-delay:2.2s; }
 
 @keyframes writeIn {
   0% { opacity:0; transform:scale(1.5); }
@@ -220,15 +221,15 @@ nav ul li a:focus-visible { outline:2px solid var(--gold); outline-offset:-2px; 
 .hero-sub .w, .hero-sub .d {
   opacity:0;
   display:inline-block;
-  animation:wordReveal 0.4s ease forwards;
+  animation:wordReveal 0.6s cubic-bezier(.25,.1,.25,1) forwards;
 }
-.hero-sub .w:nth-child(5) { animation-delay:5.3s; }
-.hero-sub .w:nth-child(6) { animation-delay:5.8s; }
-.hero-sub .w:nth-child(7) { animation-delay:6.3s; }
-.hero-sub .d:nth-child(8) { animation-delay:6.8s; }
-.hero-sub .w:nth-child(9) { animation-delay:7.3s; }
-.hero-sub .w:nth-child(10) { animation-delay:7.8s; }
-.hero-sub .w:nth-child(11) { animation-delay:8.3s; }
+.hero-sub .w:nth-child(5) { animation-delay:7.3s; }
+.hero-sub .w:nth-child(6) { animation-delay:8.1s; }
+.hero-sub .w:nth-child(7) { animation-delay:8.9s; }
+.hero-sub .d:nth-child(8) { animation-delay:9.7s; }
+.hero-sub .w:nth-child(9) { animation-delay:10.5s; }
+.hero-sub .w:nth-child(10) { animation-delay:11.3s; }
+.hero-sub .w:nth-child(11) { animation-delay:12.1s; }
 
 @keyframes fadeIn {
   to { opacity:1; }
@@ -245,7 +246,7 @@ nav ul li a:focus-visible { outline:2px solid var(--gold); outline-offset:-2px; 
 
 .hero-cta {
   display:flex; gap:1.5rem; justify-content:center; flex-wrap:wrap; margin-top:1rem; margin-bottom:1rem;
-  opacity:0; animation:riseIn 2s 5.5s cubic-bezier(.16,1,.3,1) forwards;
+  opacity:0; animation:riseIn 2s 5.8s cubic-bezier(.25,.1,.25,1) forwards;
 }
 
 @keyframes riseIn {
@@ -275,6 +276,8 @@ nav ul li a:focus-visible { outline:2px solid var(--gold); outline-offset:-2px; 
 .btn.ghost::before { background:rgba(240,232,216,0.08); }
 .btn.ghost:hover { color:var(--vellum); }
 .btn:focus-visible { outline:2px solid var(--gold); outline-offset:3px; }
+
+
 
 .section-wrap { max-width:1080px; margin:0 auto; padding:4rem 3rem; }
 
@@ -561,7 +564,6 @@ footer {
   .lyrics-layout { grid-template-columns:1fr; gap:2rem; }
   .lyrics-nav { display:none; }
   .lyrics-select { display:block; margin-bottom:1rem; }
-  .lyrics-nav { position:static; flex-direction:row; flex-wrap:wrap; border:none; gap:4px; }
   .lyric-tab { border:0.5px solid rgba(200,146,26,0.15) !important; padding:8px 14px !important; border-left:none !important; }
   .lyric-tab.active { border-bottom:2px solid var(--gold) !important; }
   .show-row { grid-template-columns:1fr auto; gap:0.8rem; padding:1.2rem; }
@@ -581,7 +583,7 @@ footer {
   <a href="#home" class="nav-logo" aria-label="RVRND home">
     <span class="nav-ankh" aria-hidden="true">𓋹</span> RVRND
   </a>
-  <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation menu" onclick="this.setAttribute('aria-expanded', document.querySelector('#nav-menu').classList.toggle('open') || true)">☰</button>
+  <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation menu" onclick="this.setAttribute('aria-expanded', document.querySelector('#nav-menu').classList.toggle('open'))">☰</button>
   <ul id="nav-menu">
     <li><a href="#about">About</a></li>
     <li><a href="#lyrics">Lyrics</a></li>
@@ -594,7 +596,7 @@ footer {
 
 <section id="home" aria-labelledby="hero-title">
   <img src="hand.webp" alt="" class="hero-hand" aria-hidden="true">
-  <div class="hero-frame" aria-hidden="true">
+  <div class="hero-frame">
     <div class="hero-inner">
       <h1 id="hero-title" class="hero-title">
         <span class="letter l1">R</span><span class="letter l2">V</span><span class="letter l3">R</span><span class="letter l4">N</span><span class="letter l5">D</span>
@@ -605,7 +607,10 @@ footer {
         <div class="hero-title-line" style="width:52px;"></div>
       </div>
       <p class="hero-sub"><span class="hero-sub-line"></span><br><span class="gold-rule" style="width:50px;margin:0.8rem auto;"></span><br><span class="w">into</span> <span class="w">the</span> <span class="w">darkness</span> <span class="d">—</span> <span class="w">toward</span> <span class="w">each</span> <span class="w">other</span></p>
-      <audio id="hero-audio" src="romans.mp3"></audio>
+      <audio id="hero-audio" preload="auto">
+        <source src="romans.m4a" type="audio/mp4">
+        <source src="romans.mp3" type="audio/mpeg">
+      </audio>
       <div class="hero-cta">
         <button class="btn" id="play-music"><span> Hear the Music</span></button>
         <a href="#about" class="btn ghost"><span>Enter</span></a>
@@ -650,11 +655,11 @@ footer {
   </div>
   <div class="lyrics-layout">
     <nav class="lyrics-nav" aria-label="Song list">
-      <button class="lyric-tab active" data-lyric="witch">The Witch of Alachua</button>
-      <button class="lyric-tab" data-lyric="eulogy">Eulogy (1903)</button>
-      <button class="lyric-tab" data-lyric="romans">Romans 1:18</button>
-      <button class="lyric-tab" data-lyric="parts">These Parts</button>
-      <button class="lyric-tab" data-lyric="valhalla">Valhalla (Get Along)</button>
+      <button class="lyric-tab active" data-lyric="witch" id="lyric-tab-witch">The Witch of Alachua</button>
+      <button class="lyric-tab" data-lyric="eulogy" id="lyric-tab-eulogy">Eulogy (1903)</button>
+      <button class="lyric-tab" data-lyric="romans" id="lyric-tab-romans">Romans 1:18</button>
+      <button class="lyric-tab" data-lyric="parts" id="lyric-tab-parts">These Parts</button>
+      <button class="lyric-tab" data-lyric="valhalla" id="lyric-tab-valhalla">Valhalla (Get Along)</button>
     </nav>
     <select class="lyrics-select" aria-label="Select song">
       <option value="witch">The Witch of Alachua</option>
@@ -874,11 +879,9 @@ We'll open our arms and our doors.
     </div>
   </div>
   <div class="social-strip">
-    <a href="https://www.instagram.com/rvrnd83?igsh=MWs4OTdvMWRybWp4&utm_source=qr" class="soc" target="_blank" rel="noopener noreferrer">Instagram</a>
-    <a href="#" class="soc">Spotify</a>
-    <a href="#" class="soc">Apple Music</a>
-    <a href="#" class="soc">YouTube</a>
-    <a href="#" class="soc">TikTok</a>
+    <a href="https://www.instagram.com/rvrnd1903?srtk=MWs4OTdvMWRybWp4&utm_source=qr" class="soc" target="_blank" rel="noopener noreferrer">Instagram</a>
+    <a href="https://www.youtube.com/@rvrndmusic" class="soc" target="_blank" rel="noopener noreferrer">YouTube</a>
+    <a href="https://www.tiktok.com/@rvrndmusic?_r=1&_t=ZT-9Ads5CfZ07a" class="soc" target="_blank" rel="noopener noreferrer">TikTok</a>
   </div>
 </div>
 </section>
@@ -951,12 +954,18 @@ document.addEventListener('DOMContentLoaded', () => {
   if (playBtn && heroAudio) {
     playBtn.addEventListener('click', () => {
       if (heroAudio.paused) {
-        heroAudio.play();
-        playBtn.querySelector('span').textContent = ' Pause Music';
+        heroAudio.play().then(() => {
+          playBtn.querySelector('span').textContent = ' Pause Music';
+        }).catch(() => {
+          playBtn.querySelector('span').textContent = ' Playback blocked';
+        });
       } else {
         heroAudio.pause();
         playBtn.querySelector('span').textContent = ' Hear the Music';
       }
+    });
+    heroAudio.addEventListener('ended', () => {
+      playBtn.querySelector('span').textContent = ' Hear the Music';
     });
   }
 
